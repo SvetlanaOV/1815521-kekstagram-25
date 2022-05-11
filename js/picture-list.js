@@ -1,10 +1,10 @@
-import {createPhotoArray} from './data.js';
+//import {createPhotoArray} from './data.js';
 import {renderFullPicture} from './fullscreen-photo.js';
 
 const usersPictures = document.querySelector('.pictures');
 const usersPicturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const pictures = createPhotoArray();
+//const pictures = createPhotoArray();
 
 const similarListFragment = document.createDocumentFragment();
 
@@ -20,9 +20,11 @@ const renderPicture = ({url, description, comments, likes}) => {
   similarListFragment.append(pictureElement);
 };
 
-const renderAllPictures = () => {
+const renderAllPictures = (pictures) => {
   pictures.forEach(renderPicture);
   usersPictures.append(similarListFragment);
 };
 
-renderAllPictures();
+//renderAllPictures();
+
+export {renderAllPictures};

@@ -1,3 +1,7 @@
+import {
+  showAlert
+} from './util.js';
+
 const form = document.querySelector('.img-upload__form');
 
 const pristine = new Pristine(form, {
@@ -35,7 +39,7 @@ function validateHashtag(value) {
 //Проверка длины комментария
 const MAX_COMMENT_LENGTH = 140;
 
-function validateCommentsLengts (value) {
+function validateCommentsLengts(value) {
   return value.length <= MAX_COMMENT_LENGTH;
 }
 
@@ -67,13 +71,36 @@ pristine.addValidator(
   'Ой-ой, комментарий должен содержать не больше 140 символов'
 );
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  const isValid = pristine.validate();
-  if (isValid) {
-    window.console.log('Можно отправлять');
-  } else {
-    window.console.log('Форма невалидна');
-  }
-});
+    const isValid = pristine.validate();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+
+      fetch(
+        'https://25.javascript.pages.academy/kekstagram', {
+          method: 'POST',
+          body: formData,
+        },
+      )
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+          } else {
+            showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+          }
+        })
+        .catch(() => {
+          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+        });
+    }
+  });
+};
+
+
+export {
+  setUserFormSubmit
+};

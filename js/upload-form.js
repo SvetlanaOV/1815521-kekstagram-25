@@ -55,3 +55,5 @@ function onUploadFormClose() {
 pictureUploadInput.addEventListener('click', onUploadFormOpen);
 
 pictureUplodeFormClose.addEventListener('click', onUploadFormClose);
+
+export {onUploadFormOpen, onUploadFormClose};

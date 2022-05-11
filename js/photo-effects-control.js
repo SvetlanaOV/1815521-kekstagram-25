@@ -19,6 +19,17 @@ const createSlider = () => {
     start: 100,
     step: 1,
     connect: 'lower',
+    format: {
+      to: function (value) {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
+    },
   });
 
   //Функция отслеживает изменение ползунка слайдера и записывает новое значение в поле отправки на сервер
@@ -49,11 +60,15 @@ const onEffectClik = () => {
 
       sliderElement.noUiSlider.updateOptions({
         start: 1,
+        step: 0.1,
         range: {
           min: 0,
           max: 1,
         },
-        step: 0.1,
+        format: {
+          to(value) { return value.toFixed(1); },
+          from(value) { return parseFloat(value); }
+        }
       });
       sliderElement.noUiSlider.on('update', () => {
         photoPreview.style.filter = `grayscale(${effectLevelValue.value})`;
@@ -63,11 +78,15 @@ const onEffectClik = () => {
 
       sliderElement.noUiSlider.updateOptions({
         start: 1,
+        step: 0.1,
         range: {
           min: 0,
           max: 1,
         },
-        step: 0.1,
+        format: {
+          to(value) { return value.toFixed(1); },
+          from(value) { return parseFloat(value); }
+        }
       });
       sliderElement.noUiSlider.on('update', () => {
         photoPreview.style.filter = `sepia(${effectLevelValue.value})`;
@@ -77,11 +96,15 @@ const onEffectClik = () => {
 
       sliderElement.noUiSlider.updateOptions({
         start: 100,
+        step: 1,
         range: {
           min: 0,
           max: 100,
         },
-        step: 1,
+        format: {
+          to(value) { return `${value}%`; },
+          from(value) { return parseFloat(value); }
+        }
       });
       sliderElement.noUiSlider.on('update', () => {
         photoPreview.style.filter = `invert(${effectLevelValue.value}%)`;
@@ -92,11 +115,15 @@ const onEffectClik = () => {
 
       sliderElement.noUiSlider.updateOptions({
         start: 3,
+        step: 0.1,
         range: {
           min: 0,
           max: 3,
         },
-        step: 0.1,
+        format: {
+          to(value) { return `${value.toFixed(1)}px`; },
+          from(value) { return parseFloat(value); }
+        }
       });
       sliderElement.noUiSlider.on('update', () => {
         photoPreview.style.filter = `blur(${effectLevelValue.value}px)`;
@@ -106,11 +133,15 @@ const onEffectClik = () => {
 
       sliderElement.noUiSlider.updateOptions({
         start: 3,
+        step: 0.1,
         range: {
           min: 1,
           max: 3,
         },
-        step: 0.1,
+        format: {
+          to(value) { return value.toFixed(1); },
+          from(value) { return parseFloat(value); }
+        }
       });
       sliderElement.noUiSlider.on('update', () => {
         photoPreview.style.filter = `brightness(${effectLevelValue.value})`;

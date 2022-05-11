@@ -37,7 +37,7 @@ const renderAllComments = (comments) => {
 const commentsLoader = document.querySelector('.social__comments-loader');
 const commentsLoaded = document.querySelector('.comments-load');
 
-//Показ одного комменатрия
+//Показ одного комментария
 const openOneComment = () => {
   const firstHiddenComment = document.querySelector('.social__comment.hidden');
   if (firstHiddenComment === null) {
