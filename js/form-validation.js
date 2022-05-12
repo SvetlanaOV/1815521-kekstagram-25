@@ -1,6 +1,5 @@
-import {
-  showAlert
-} from './util.js';
+import {showAlert, showSuccessMessage, showUploadErrorMessage} from './messages.js';
+import {sendData} from './api.js';
 
 const form = document.querySelector('.img-upload__form');
 
@@ -70,36 +69,41 @@ pristine.addValidator(
   validateCommentsLengts,
   'Ой-ой, комментарий должен содержать не больше 140 символов'
 );
+//Блокировка кнопки Опубликовать при отправке данных
+const submitButton = document.querySelector('.img-upload__submit');
 
-const setUserFormSubmit = (onSuccess) => {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Сохраняю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Сохранить';
+};
+
+const setUserFormSubmit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
     if (isValid) {
-      const formData = new FormData(evt.target);
-
-
-      fetch(
-        'https://25.javascript.pages.academy/kekstagram', {
-          method: 'POST',
-          body: formData,
+      blockSubmitButton();
+      sendData(
+        () => {
+          showSuccessMessage();
+          unblockSubmitButton();
         },
-      )
-        .then((response) => {
-          if (response.ok) {
-            onSuccess();
-          } else {
-            showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-          }
-        })
-        .catch(() => {
+        () => {
           showAlert('Не удалось отправить форму. Попробуйте ещё раз');
-        });
+          showUploadErrorMessage();
+          unblockSubmitButton();
+        },
+        new FormData(evt.target),
+      );
     }
   });
 };
-
 
 export {
   setUserFormSubmit
