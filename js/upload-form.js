@@ -1,6 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {addScaleListeners, removeScaleListeners} from './photo-scale-control.js';
 import {createSlider, addEffectsListener, removeEffectsListener, resetEffect, removeSlider} from './photo-effects-control.js';
+import {resetFileInput} from './photo-preview.js';
 
 const pictureUploadForm = document.querySelector('.img-upload__form');
 const pictureUploadInput = document.querySelector('.img-upload__input');
@@ -50,6 +51,10 @@ function onUploadFormClose() {
 
   pictureUploadForm.reset();
   pictureUploadInput.value = '';
+
+  //Возврат превью картинки к картинке по умолчанию
+  resetFileInput();
+
 }
 
 pictureUploadInput.addEventListener('click', onUploadFormOpen);

@@ -102,7 +102,7 @@ const onEffectClik = () => {
           max: 100,
         },
         format: {
-          to(value) { return `${value}%`; },
+          to(value) { return value.toFixed(1); },
           from(value) { return parseFloat(value); }
         }
       });
@@ -121,7 +121,7 @@ const onEffectClik = () => {
           max: 3,
         },
         format: {
-          to(value) { return `${value.toFixed(1)}px`; },
+          to(value) { return value.toFixed(1); },
           from(value) { return parseFloat(value); }
         }
       });
